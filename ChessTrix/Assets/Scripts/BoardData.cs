@@ -6,7 +6,6 @@ public class BoardData : ScriptableObject
     [SerializeField] public BoardColors black;
     [SerializeField] public BoardColors white;
 
-    
     [System.Serializable]
     public struct BoardColors
     {

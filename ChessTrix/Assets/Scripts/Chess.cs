@@ -8,7 +8,12 @@ using UnityEngine.InputSystem.Controls;
 
 namespace Chess
 {
-    public class UniversalFunctions : MonoBehaviour
+    public enum GameStates
+    {
+        Upgrade, Title, Board, GameOver
+    };
+
+    public class UniversalFunctions
     {
         //grabs the reference
         public static void CheckComponent<T>(ref T component, GameObject gameObject) where T : Component
@@ -35,6 +40,17 @@ namespace Chess
             }
         }
 
+        public static TileInfo GetTile(int x, int y, List<TileInfo> tiles)
+        {
+            TileInfo searchTile = tiles.Find(t => t.tilePosition == new Vector2Int(x - 1, y - 1));
+
+            if (searchTile == null) return null;
+            else return searchTile;
+        }
+    }
+
+    public class ButtonFunctions
+    {
         public static void QuitGame()
         {
             Application.Quit();

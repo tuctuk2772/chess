@@ -57,11 +57,11 @@ public class RoundManager : MonoBehaviour
 
     public void QuitGame()
     {
-        UniversalFunctions.QuitGame();
+        ButtonFunctions.QuitGame();
     }
 
     public void RestartGame()
     {
-        UniversalFunctions.RestartGame();
+        ButtonFunctions.RestartGame();
     }
 }

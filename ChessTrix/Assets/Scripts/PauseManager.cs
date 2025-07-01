@@ -46,6 +46,6 @@ public class PauseManager : MonoBehaviour
 
     public void QuitGame()
     {
-        UniversalFunctions.QuitGame();
+        ButtonFunctions.QuitGame();
     }
 }

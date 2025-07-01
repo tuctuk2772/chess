@@ -1,17 +1,15 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
-using Unity.VisualScripting;
+using Chess;
 
-[System.Serializable]
-public class ChessPieceData
+[CreateAssetMenu(fileName = "NewChessPiece", menuName = "Chess/Chess Piece")]
+public class ChessPieceData : ScriptableObject
 {
     public enum PieceColor { White, Black }
     public enum PieceType { Pawn, Knight, Bishop, Rook, Queen, King }
     public enum MovementType { Horizontal, Vertical, Diagonal, LShape, SingleSpace, PawnSpecific }
 
     //actual variables
-    public string PieceName => $"{pieceColor} {pieceType}";
     public Sprite pieceSprite;
     public PieceColor pieceColor;
     public PieceType pieceType;
@@ -24,29 +22,9 @@ public class ChessPieceData
     - Queen = 10
     */
     public List<MovementType> movements = new List<MovementType>();
+    public PieceModifiers modifier;
+    public string PieceName => $"{pieceColor} {pieceType}";
 }
-
-#if UNITY_EDITOR
-[CustomPropertyDrawer(typeof(ChessPieceData))]
-public class ChessPieceDataDrawer : PropertyDrawer
-{
-    public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
-    {
-        return EditorGUI.GetPropertyHeight(property, true);
-    }
-
-    public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
-    {
-        // Build name from pieceColor and pieceType
-        var colorProp = property.FindPropertyRelative("pieceColor");
-        var typeProp = property.FindPropertyRelative("pieceType");
-
-        string title = $"{colorProp.enumDisplayNames[colorProp.enumValueIndex]} {typeProp.enumDisplayNames[typeProp.enumValueIndex]}";
-
-        EditorGUI.PropertyField(position, property, new GUIContent(title), true);
-    }
-}
-#endif
 
 public class RuntimeChessPieceData
 {
@@ -55,5 +33,6 @@ public class RuntimeChessPieceData
     public Sprite pieceSprite;
     public List<ChessPieceData.MovementType> movements;
     public float pieceValue;
+
     public int moveAmount; //mainly for pawn, but might need for castling
 }
