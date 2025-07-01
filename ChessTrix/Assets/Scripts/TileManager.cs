@@ -1,4 +1,4 @@
-using Chess;
+/*using Chess;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -41,7 +41,6 @@ public class TileManager : MonoBehaviour
         UniversalFunctions.CheckComponent(ref pieceManager, gameObject);
         UniversalFunctions.CheckComponent(ref pauseManager, gameObject);
         UniversalFunctions.CheckComponent(ref scoreManager, gameObject);
-        UniversalFunctions.CheckComponent(ref generateBoard, gameObject);
         UniversalFunctions.CheckComponent(ref roundManager, gameObject);
     }
 
@@ -357,3 +356,4 @@ public class TileManager : MonoBehaviour
         else return searchTile;
     }
 };
+*/

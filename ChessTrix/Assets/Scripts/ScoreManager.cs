@@ -1,4 +1,4 @@
-using UnityEngine;
+/*using UnityEngine;
 using System.Runtime.CompilerServices;
 using TMPro;
 using System;
@@ -77,3 +77,4 @@ public class ScoreManager : MonoBehaviour
         else return false;
     }
 }
+*/
