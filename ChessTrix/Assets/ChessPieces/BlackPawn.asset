@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f62f075d4bb90f468eb7d07abcf1cff, type: 3}
+  m_Name: BlackPawn
+  m_EditorClassIdentifier: 
+  pieceSprite: {fileID: -1595712175122738579, guid: 8d829df55b5153541b4f53d95109bd59, type: 3}
+  pieceColor: 1
+  pieceType: 0
+  pieceValue: 10
+  movements: 05000000
