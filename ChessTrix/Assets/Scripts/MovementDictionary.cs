@@ -4,7 +4,6 @@ using static ChessPieceData;
 
 public static class MovementDictionary
 {
-
     public static List<Vector2Int> GetOffsets(MovementType type)
     {
         switch (type)

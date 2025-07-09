@@ -1,4 +1,4 @@
-using UnityEngine;
+/*using UnityEngine;
 using UnityEngine.UI;
 using Chess;
 
@@ -49,3 +49,4 @@ public class PauseManager : MonoBehaviour
         ButtonFunctions.QuitGame();
     }
 }
+*/

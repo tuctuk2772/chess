@@ -40,12 +40,12 @@ namespace Chess
             }
         }
 
-        public static TileInfo GetTile(int x, int y, List<TileInfo> tiles)
+        public static SquareInfo GetSquare(int x, int y, List<SquareInfo> squares)
         {
-            TileInfo searchTile = tiles.Find(t => t.tilePosition == new Vector2Int(x - 1, y - 1));
+            SquareInfo searchSquare = squares.Find(t => t.squarePosition == new Vector2Int(x, y));
 
-            if (searchTile == null) return null;
-            else return searchTile;
+            if (searchSquare == null) return null;
+            else return searchSquare;
         }
     }
 
@@ -67,21 +67,23 @@ namespace Chess
 
     public class StaticVariables
     {
+        //default scale of piece
+        public static readonly Vector3 defaultScale = new Vector3(0.05f, 0.05f, 1f);
+
         //variables for needed scoring
-        public static double DEFAULT_NEEDED_SCORE = 1500; //default = 1500 (in case changed)
+        public static readonly double DEFAULT_NEEDED_SCORE = 1500; //default = 1500 (in case changed)
 
         //variables for scoring
-        public static float TAKEN_MULTIPLIER = 25f;
-        public static float HORIZONTAL_CLEARING_MULTIPLIER = 50f;
-        public static float VERTICAL_CLEARING_MULTIPLIER = 100f;
-        public static float DIAGONAL_CLEARING_MULTIPLIER = 250f;
-        public static float CHECKMATE_MULTIPLIER = 500f;
+        public static readonly float TAKEN_MULTIPLIER = 25f;
+        public static readonly float HORIZONTAL_CLEARING_MULTIPLIER = 50f;
+        public static readonly float VERTICAL_CLEARING_MULTIPLIER = 100f;
+        public static readonly float CHECKMATE_MULTIPLIER = 500f;
 
         //variables for visuals
-        public static float PIECE_ALPHA_VALUE = 0.25f;
+        public static readonly float PIECE_ALPHA_VALUE = 0.25f;
 
         //variables for rounds
-        public static int MAX_TURNS_AMOUNT = 64;
+        public static readonly int MAX_TURNS_AMOUNT = 64;
     }
 
     public class StaticChessInformation

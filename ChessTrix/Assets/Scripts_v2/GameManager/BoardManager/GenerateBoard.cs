@@ -17,10 +17,12 @@ public struct GenerateBoardConfig
 
 public class GenerateBoard
 {
-    public static void GenereateBoardTiles(GenerateBoardConfig config, ref List<TileInfo> tiles)
+    public static float GenerateBoardSquares(GenerateBoardConfig config, ref List<SquareInfo> tiles)
     {
         if (config.debugSquare != null)
+        {
             config.debugSquare.gameObject.SetActive(false);
+        }
 
         Vector2 boardWorldSize = config.debugSquare.localScale;
         Vector2 tileSize = new Vector2(
@@ -28,18 +30,25 @@ public class GenerateBoard
             boardWorldSize.y / config.squareAmount.y
         );
 
-        if (InputManager.input != null && InputManager.input.trackMousePos != null)
+        if (InputManager.input == null || InputManager.input.trackMousePos == null)
         {
-            InputManager.input.trackMousePos.tileSize = tileSize;
-            InputManager.input.trackMousePos.boardSize = config.squareAmount;
-
-            Vector2 centeredOffset = (Vector2)config.boardParent.position -
-                                     new Vector2(boardWorldSize.x, boardWorldSize.y) / 2f;
-            InputManager.input.trackMousePos.offset = centeredOffset;
+            Debug.LogError("No input found!");
+            return 0f;
         }
+
+        InputManager.input.trackMousePos.tileSize = tileSize;
+        InputManager.input.trackMousePos.boardSize = config.squareAmount;
+
+        Vector2 centeredOffset = (Vector2)config.boardParent.position -
+                                 new Vector2(boardWorldSize.x, boardWorldSize.y) / 2f;
+        InputManager.input.trackMousePos.offset = centeredOffset;
 
         Vector2 boardBottomLeft = (Vector2)config.boardParent.position -
                                    new Vector2(boardWorldSize.x, boardWorldSize.y) / 2f;
+
+        float delayStep = 0.005f;
+        float animDuration = 0.25f;
+        int index = 0;
 
         for (int row = 0; row < config.squareAmount.y; row++)
         {
@@ -51,30 +60,37 @@ public class GenerateBoard
                     0f
                 );
 
-                GameObject tileObject = UnityEngine.Object.Instantiate(
+                GameObject squareObject = UnityEngine.Object.Instantiate(
                     config.tilePrefab,
                     position,
                     Quaternion.identity,
                     config.boardParent
                 );
 
-                tileObject.transform.localScale = new Vector3(tileSize.x, tileSize.y, 1f);
-                tileObject.name = $"Tile_{col}_{row}";
+                squareObject.transform.localScale = Vector3.zero;
+                squareObject.name = $"Tile_{col}_{row}";
+                squareObject.isStatic = true;
 
-                SpriteRenderer renderer = tileObject.GetComponent<SpriteRenderer>();
+                SpriteRenderer renderer = squareObject.GetComponent<SpriteRenderer>();
                 if (renderer != null)
                 {
                     renderer.color = (col + row) % 2 == 0 ? config.boardData.black.normal : config.boardData.white.normal;
                 }
 
-                TileInfo tileInfo = tileObject.GetComponent<TileInfo>();
-                if (tileInfo != null)
+                float delay = index * delayStep;
+                Juice_ObjectSpawning.SpawnSquare(squareObject, new Vector3(tileSize.x, tileSize.y, 1f), delay);
+                index++;
+
+                SquareInfo squareInfo = squareObject.GetComponent<SquareInfo>();
+                if (squareInfo != null)
                 {
-                    tiles.Add(tileInfo);
-                    tileInfo.tilePosition = new Vector2Int(col, row);
-                    tileInfo.defaultColor = (col + row) % 2 == 0 ? config.boardData.black.normal : config.boardData.white.normal;
+                    tiles.Add(squareInfo);
+                    squareInfo.squarePosition = new Vector2Int(col, row);
+                    squareInfo.defaultColor = renderer.color;
                 }
             }
         }
+
+        return (index - 1) * delayStep + animDuration;
     }
 }
