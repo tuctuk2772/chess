@@ -2484,10 +2484,14 @@ MonoBehaviour:
   boardParent: {fileID: 696926340}
   debugSquare: {fileID: 1914418447}
   boardData: {fileID: 11400000, guid: f61ee9c87de145541b346c100b9cf8c1, type: 2}
-  selectedSquare: {fileID: 0}
-  hoveredSquare: {fileID: 0}
+  previousSelectedSquare: {fileID: 0}
+  currentSelectedSquare: {fileID: 0}
+  previousHoveredSquare: {fileID: 0}
+  currentHoveredSquare: {fileID: 0}
   squares: []
-  validSquares: []
+  allValidSquares: []
+  validEmptySquares: []
+  validCaptureSquares: []
 --- !u!114 &1273511473
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2504,6 +2508,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   squarePosition: {x: 0, y: 0}
+  isBeingHeld: 0
 --- !u!114 &1273511474
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -13,5 +13,6 @@ public class BoardData : ScriptableObject
     }
     [Space(25)]
     public Color selected;
-    public Color validMove;
+    public Color validEmptyMove;
+    public Color validCaptureMove;
 }

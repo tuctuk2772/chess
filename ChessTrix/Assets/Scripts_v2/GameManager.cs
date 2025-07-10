@@ -29,6 +29,8 @@ public class GameManager : MonoBehaviour
         UniversalFunctions.CheckComponent(ref boardManager, gameObject);
         UniversalFunctions.CheckComponent(ref inputManager, gameObject);
         UniversalFunctions.CheckComponent(ref chessPieceManager, gameObject);
+
+        DOTween.ClearCachedTweens();
     }
 
     private void Start()

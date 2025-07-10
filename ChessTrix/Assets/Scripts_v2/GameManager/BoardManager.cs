@@ -19,14 +19,21 @@ public class BoardManager : MonoBehaviour
 
     [Space(10)]
     [Header("Variables")]
-    public SquareInfo selectedSquare;
-    public SquareInfo hoveredSquare;
+    public SquareInfo previousSelectedSquare;
+    public SquareInfo currentSelectedSquare;
+    public SquareInfo previousHoveredSquare;
+    public SquareInfo currentHoveredSquare;
     [HideInInspector] public List<SquareInfo> squares;
-    public List<SquareInfo> validSquares;
+    public List<SquareInfo> allValidSquares;
+    public List<SquareInfo> validEmptySquares;
+    public List<SquareInfo> validCaptureSquares;
 
     private void Awake()
     {
-        getValidSquares = new GetValidSquares();
+        getValidSquares = new GetValidSquares
+        {
+            boardManager = this
+        };
     }
 
     public float CreateBoard()

@@ -17,6 +17,8 @@ public class InputManager : MonoBehaviour
     public LayerMask boardLayer;
     public Vector2Int squarePosition;
 
+    public bool isBeingHeld;
+
     private void Awake()
     {
         if (input != null && input != this)
@@ -39,11 +41,34 @@ public class InputManager : MonoBehaviour
             squares = GetComponent<BoardManager>().squares
         };
 
-        hoverSquares = new HoverSquares();
+        hoverSquares = new HoverSquares()
+        {
+            boardManager = GameManager.instance.boardManager,
+        };
 
         //setup controls
-        inputActions.Player.Interact.started += ctx => selectSquares.SelectSquare(squarePosition);
-        inputActions.Player.Interact.canceled += ctx => selectSquares.StopDrag(squarePosition);
+        inputActions.Player.Interact.started += ctx =>
+        {
+            isBeingHeld = true;
+            selectSquares.SelectSquare(squarePosition);
+        };
+        inputActions.Player.Interact.canceled += ctx =>
+        {
+            isBeingHeld = false;
+            if (selectSquares.movedOutsideBounds)
+            {
+                selectSquares.StopDrag(squarePosition);
+            }
+            else if (GameManager.instance.boardManager.currentSelectedSquare ==
+                     GameManager.instance.boardManager.previousSelectedSquare)
+            {
+                selectSquares.DeSelectSquare(squarePosition);
+            }
+            else
+            {
+                selectSquares.dragged = false;
+            }
+        };
     }
 
     private void Start()
@@ -53,18 +78,15 @@ public class InputManager : MonoBehaviour
 
     private void LateUpdate()
     {
+        //always have hovering being tracked
         squarePosition = trackMousePos.UpdatePosition();
         Debug.DrawLine(Camera.main.transform.position, trackMousePos.DebugLinePosition(),
             selectSquares.dragged ? Color.green : Color.red);
 
-        GameManager.instance.boardManager.hoveredSquare = hoverSquares.HoveredSquare(squarePosition);
-
-        if (selectSquares.dragged)
+        if (isBeingHeld && selectSquares.dragged && GameManager.instance.boardManager.currentSelectedSquare != null)
         {
-            selectSquares.MovePiece(trackMousePos.MousePosition(),
-                GameManager.instance.boardManager.selectedSquare.transform);
-            hoverSquares.ResetHover();
-            return;
+            selectSquares.DragPiece(trackMousePos.MousePosition(),
+                GameManager.instance.boardManager.currentSelectedSquare.transform);
         }
 
         hoverSquares.UpdateHover(squarePosition, trackMousePos.MousePosition());

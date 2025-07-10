@@ -17,4 +17,5 @@ MonoBehaviour:
   white:
     normal: {r: 0.9215687, g: 0.92549026, b: 0.81568635, a: 1}
   selected: {r: 1, g: 0.47272682, b: 0, a: 1}
-  validMove: {r: 0.16990069, g: 0.8018868, b: 0, a: 1}
+  validEmptyMove: {r: 0.079197526, g: 1, b: 0, a: 1}
+  validCaptureMove: {r: 1, g: 0.8910483, b: 0, a: 1}

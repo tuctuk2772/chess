@@ -47,6 +47,24 @@ namespace Chess
             if (searchSquare == null) return null;
             else return searchSquare;
         }
+
+        public static bool CheckIfSquareValidCapture(ref SquareInfo square)
+        {
+            ref BoardManager boardManager = ref GameManager.instance.boardManager;
+
+            if (boardManager.validCaptureSquares != null && boardManager.validCaptureSquares.Contains(square))
+            {
+                return true;
+            }
+
+            if (boardManager.validEmptySquares != null && boardManager.validEmptySquares.Contains(square))
+            {
+                return false;
+            }
+
+            Debug.Log("something went wrong with CheckIfSquareValidCapture!");
+            return false;
+        }
     }
 
     public class ButtonFunctions
