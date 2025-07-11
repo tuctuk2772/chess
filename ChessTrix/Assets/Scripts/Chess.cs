@@ -15,6 +15,8 @@ namespace Chess
 
     public class UniversalFunctions
     {
+        public static BoardManager boardManager => GameManager.instance.boardManager;
+
         //grabs the reference
         public static void CheckComponent<T>(ref T component, GameObject gameObject) where T : Component
         {
@@ -40,9 +42,9 @@ namespace Chess
             }
         }
 
-        public static SquareInfo GetSquare(int x, int y, List<SquareInfo> squares)
+        public static SquareInfo GetSquare(int x, int y)
         {
-            SquareInfo searchSquare = squares.Find(t => t.squarePosition == new Vector2Int(x, y));
+            SquareInfo searchSquare = boardManager.allSquares.Find(t => t.squarePosition == new Vector2Int(x, y));
 
             if (searchSquare == null) return null;
             else return searchSquare;
@@ -96,9 +98,6 @@ namespace Chess
         public static readonly float HORIZONTAL_CLEARING_MULTIPLIER = 50f;
         public static readonly float VERTICAL_CLEARING_MULTIPLIER = 100f;
         public static readonly float CHECKMATE_MULTIPLIER = 500f;
-
-        //variables for visuals
-        public static readonly float PIECE_ALPHA_VALUE = 0.25f;
 
         //variables for rounds
         public static readonly int MAX_TURNS_AMOUNT = 64;

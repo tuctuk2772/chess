@@ -2,12 +2,19 @@ using UnityEngine;
 using Chess;
 using System.Runtime.CompilerServices;
 using DG.Tweening;
+using System.Transactions;
+using System.Collections;
+using Unity.VisualScripting;
 
 [RequireComponent(typeof(BoardManager))]
 [RequireComponent(typeof(InputManager))]
 [RequireComponent(typeof(ChessPieceManager))]
 public class GameManager : MonoBehaviour
 {
+    public Vector2Int debug;
+    public bool clicked;
+    //public bool finished;
+
     public static GameManager instance { get; private set; }
 
     public GameStates gameState = GameStates.Board;
@@ -33,6 +40,30 @@ public class GameManager : MonoBehaviour
         DOTween.ClearCachedTweens();
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            clicked = true;
+        }
+
+        bool spawnDone = DOTween.TotalTweensById("spawn") == 0;
+
+        //this is dogshit code, but DOTween makes no sense and it's temporary
+        if (spawnDone && clicked && DOTween.TotalTweensById("moveSquares") == 0)
+        {
+            chessPieceManager.moveAllPieces.MoveAllPiecesDirection(chessPieceManager.activeChessPieces,
+                null,
+                debug,
+                () =>
+                {
+                    //Debug.Break();
+                    //finished = true;
+                    clicked = false;
+                });
+        }
+    }
+
     private void Start()
     {
         switch (gameState)
@@ -43,43 +74,43 @@ public class GameManager : MonoBehaviour
                 DOVirtual.DelayedCall(boardSpawnTime, () =>
                 {
                     chessPieceManager.spawnPiece.SpawnSpecificPiece(
-                    UniversalFunctions.GetSquare(0, 4, boardManager.squares),
+                    UniversalFunctions.GetSquare(0, 4),
                     ChessPieceData.PieceColor.White, ChessPieceData.PieceType.Pawn);
 
                     chessPieceManager.spawnPiece.SpawnSpecificPiece(
-                    UniversalFunctions.GetSquare(6, 4, boardManager.squares),
+                    UniversalFunctions.GetSquare(6, 4),
                     ChessPieceData.PieceColor.White, ChessPieceData.PieceType.Pawn);
 
                     chessPieceManager.spawnPiece.SpawnSpecificPiece(
-                        UniversalFunctions.GetSquare(4, 5, boardManager.squares),
+                        UniversalFunctions.GetSquare(4, 5),
                         ChessPieceData.PieceColor.Black, ChessPieceData.PieceType.Knight);
 
                     chessPieceManager.spawnPiece.SpawnSpecificPiece(
-                        UniversalFunctions.GetSquare(4, 7, boardManager.squares),
+                        UniversalFunctions.GetSquare(4, 7),
                         ChessPieceData.PieceColor.Black, ChessPieceData.PieceType.Queen);
 
                     chessPieceManager.spawnPiece.SpawnSpecificPiece(
-                        UniversalFunctions.GetSquare(5, 7, boardManager.squares),
+                        UniversalFunctions.GetSquare(5, 7),
                         ChessPieceData.PieceColor.White, ChessPieceData.PieceType.Bishop);
 
                     chessPieceManager.spawnPiece.SpawnSpecificPiece(
-                        UniversalFunctions.GetSquare(3, 7, boardManager.squares),
+                        UniversalFunctions.GetSquare(3, 7),
                         ChessPieceData.PieceColor.White, ChessPieceData.PieceType.Bishop);
 
                     chessPieceManager.spawnPiece.SpawnSpecificPiece(
-                        UniversalFunctions.GetSquare(3, 3, boardManager.squares),
+                        UniversalFunctions.GetSquare(3, 3),
                         ChessPieceData.PieceColor.White, ChessPieceData.PieceType.Bishop);
 
                     chessPieceManager.spawnPiece.SpawnSpecificPiece(
-                        UniversalFunctions.GetSquare(1, 3, boardManager.squares),
+                        UniversalFunctions.GetSquare(1, 3),
                         ChessPieceData.PieceColor.Black, ChessPieceData.PieceType.Bishop);
 
                     chessPieceManager.spawnPiece.SpawnSpecificPiece(
-                        UniversalFunctions.GetSquare(5, 3, boardManager.squares),
+                        UniversalFunctions.GetSquare(5, 3),
                         ChessPieceData.PieceColor.Black, ChessPieceData.PieceType.Bishop);
 
                     chessPieceManager.spawnPiece.SpawnSpecificPiece(
-                        UniversalFunctions.GetSquare(7, 3, boardManager.squares),
+                        UniversalFunctions.GetSquare(7, 3),
                         ChessPieceData.PieceColor.Black, ChessPieceData.PieceType.Bishop);
                 });
                 break;

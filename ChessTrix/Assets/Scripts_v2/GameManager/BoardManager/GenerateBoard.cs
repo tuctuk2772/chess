@@ -46,8 +46,8 @@ public class GenerateBoard
         Vector2 boardBottomLeft = (Vector2)config.boardParent.position -
                                    new Vector2(boardWorldSize.x, boardWorldSize.y) / 2f;
 
-        float delayStep = 0.005f;
-        float animDuration = 0.25f;
+        float delayStep = 0.01f;
+        float animPostDelay = 0.15f;
         int index = 0;
 
         for (int row = 0; row < config.squareAmount.y; row++)
@@ -74,7 +74,9 @@ public class GenerateBoard
                 SpriteRenderer renderer = squareObject.GetComponent<SpriteRenderer>();
                 if (renderer != null)
                 {
-                    renderer.color = (col + row) % 2 == 0 ? config.boardData.black.normal : config.boardData.white.normal;
+                    Material material = renderer.material;
+                    material.SetColor("_DefaultColor", (col + row) % 2 == 0 ? config.boardData.black.normal : config.boardData.white.normal);
+                    material.SetColor("_NewColor", (col + row) % 2 == 0 ? config.boardData.white.normal : config.boardData.black.normal);
                 }
 
                 float delay = index * delayStep;
@@ -86,11 +88,10 @@ public class GenerateBoard
                 {
                     tiles.Add(squareInfo);
                     squareInfo.squarePosition = new Vector2Int(col, row);
-                    squareInfo.defaultColor = renderer.color;
                 }
             }
         }
 
-        return (index - 1) * delayStep + animDuration;
+        return (index - 1) * delayStep + animPostDelay;
     }
 }

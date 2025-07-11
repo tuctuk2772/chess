@@ -38,7 +38,7 @@ public class InputManager : MonoBehaviour
 
         selectSquares = new SelectSquares()
         {
-            squares = GetComponent<BoardManager>().squares
+            squares = GetComponent<BoardManager>().allSquares
         };
 
         hoverSquares = new HoverSquares()

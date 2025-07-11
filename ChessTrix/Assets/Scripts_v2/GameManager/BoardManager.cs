@@ -21,9 +21,11 @@ public class BoardManager : MonoBehaviour
     [Header("Variables")]
     public SquareInfo previousSelectedSquare;
     public SquareInfo currentSelectedSquare;
+    public bool clickAgain = false;
+
     public SquareInfo previousHoveredSquare;
     public SquareInfo currentHoveredSquare;
-    [HideInInspector] public List<SquareInfo> squares;
+    [HideInInspector] public List<SquareInfo> allSquares;
     public List<SquareInfo> allValidSquares;
     public List<SquareInfo> validEmptySquares;
     public List<SquareInfo> validCaptureSquares;
@@ -48,7 +50,7 @@ public class BoardManager : MonoBehaviour
             boardParent = boardParent
         };
 
-        return GenerateBoard.GenerateBoardSquares(config, ref squares);
+        return GenerateBoard.GenerateBoardSquares(config, ref allSquares);
     }
 
 #if UNITY_EDITOR
