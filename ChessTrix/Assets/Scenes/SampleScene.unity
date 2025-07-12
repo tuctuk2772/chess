@@ -2380,8 +2380,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c3d2aedc6e0e8e489a8d600e26f5b22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  debug: {x: 5, y: 3}
+  debug: {x: 0, y: -1}
   clicked: 0
+  piece: {fileID: 0}
   gameState: 2
   boardManager: {fileID: 0}
   inputManager: {fileID: 0}

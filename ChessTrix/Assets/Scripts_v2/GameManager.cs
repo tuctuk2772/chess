@@ -11,9 +11,9 @@ using Unity.VisualScripting;
 [RequireComponent(typeof(ChessPieceManager))]
 public class GameManager : MonoBehaviour
 {
-    public Vector2Int debug;
+    [Tooltip("Only input variables where x == y, or x/y is zero")] public Vector2Int debug;
     public bool clicked;
-    //public bool finished;
+    public GameObject piece;
 
     public static GameManager instance { get; private set; }
 
@@ -52,13 +52,9 @@ public class GameManager : MonoBehaviour
         //this is dogshit code, but DOTween makes no sense and it's temporary
         if (spawnDone && clicked && DOTween.TotalTweensById("moveSquares") == 0)
         {
-            chessPieceManager.moveAllPieces.MoveAllPiecesDirection(chessPieceManager.activeChessPieces,
-                null,
-                debug,
+            chessPieceManager.moveAllPieces.MoveAllPiecesDirection(piece, debug,
                 () =>
                 {
-                    //Debug.Break();
-                    //finished = true;
                     clicked = false;
                 });
         }
@@ -74,44 +70,16 @@ public class GameManager : MonoBehaviour
                 DOVirtual.DelayedCall(boardSpawnTime, () =>
                 {
                     chessPieceManager.spawnPiece.SpawnSpecificPiece(
-                    UniversalFunctions.GetSquare(0, 4),
+                    UniversalFunctions.GetSquare(7, 7),
                     ChessPieceData.PieceColor.White, ChessPieceData.PieceType.Pawn);
 
                     chessPieceManager.spawnPiece.SpawnSpecificPiece(
-                    UniversalFunctions.GetSquare(6, 4),
-                    ChessPieceData.PieceColor.White, ChessPieceData.PieceType.Pawn);
+                    UniversalFunctions.GetSquare(6, 7),
+                    ChessPieceData.PieceColor.Black, ChessPieceData.PieceType.Rook);
 
                     chessPieceManager.spawnPiece.SpawnSpecificPiece(
-                        UniversalFunctions.GetSquare(4, 5),
-                        ChessPieceData.PieceColor.Black, ChessPieceData.PieceType.Knight);
-
-                    chessPieceManager.spawnPiece.SpawnSpecificPiece(
-                        UniversalFunctions.GetSquare(4, 7),
-                        ChessPieceData.PieceColor.Black, ChessPieceData.PieceType.Queen);
-
-                    chessPieceManager.spawnPiece.SpawnSpecificPiece(
-                        UniversalFunctions.GetSquare(5, 7),
-                        ChessPieceData.PieceColor.White, ChessPieceData.PieceType.Bishop);
-
-                    chessPieceManager.spawnPiece.SpawnSpecificPiece(
-                        UniversalFunctions.GetSquare(3, 7),
-                        ChessPieceData.PieceColor.White, ChessPieceData.PieceType.Bishop);
-
-                    chessPieceManager.spawnPiece.SpawnSpecificPiece(
-                        UniversalFunctions.GetSquare(3, 3),
-                        ChessPieceData.PieceColor.White, ChessPieceData.PieceType.Bishop);
-
-                    chessPieceManager.spawnPiece.SpawnSpecificPiece(
-                        UniversalFunctions.GetSquare(1, 3),
-                        ChessPieceData.PieceColor.Black, ChessPieceData.PieceType.Bishop);
-
-                    chessPieceManager.spawnPiece.SpawnSpecificPiece(
-                        UniversalFunctions.GetSquare(5, 3),
-                        ChessPieceData.PieceColor.Black, ChessPieceData.PieceType.Bishop);
-
-                    chessPieceManager.spawnPiece.SpawnSpecificPiece(
-                        UniversalFunctions.GetSquare(7, 3),
-                        ChessPieceData.PieceColor.Black, ChessPieceData.PieceType.Bishop);
+                    UniversalFunctions.GetSquare(6, 2),
+                    ChessPieceData.PieceColor.White, ChessPieceData.PieceType.Queen);
                 });
                 break;
 
